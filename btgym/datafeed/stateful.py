@@ -233,7 +233,9 @@ class BTgymSequentialDataDomain(BTgymRandomDataDomain):
 
         # Infer Trial test support interval in number of records:
         self.trial_test_range_delta = datetime.timedelta(**self.nested_params['sampling_params']['test_period'])
-        self.trial_test_range_row = int(self.trial_test_range_delta.total_seconds() / (self.timeframe * 60))
+        #todo
+        # self.trial_test_range_row = int(self.trial_test_range_delta.total_seconds() / (self.timeframe * sixty))
+        self.trial_test_range_row = int(self.trial_test_range_delta.days / self.timeframe)
 
         #print('self.trial_test_range_delta.total_seconds(): ', self.trial_test_range_delta.total_seconds())
         #print('self.trial_test_range_row: ', self.trial_test_range_row)
@@ -250,7 +252,9 @@ class BTgymSequentialDataDomain(BTgymRandomDataDomain):
             )
             raise AssertionError
 
-        self.trial_train_range_row = int(self.trial_train_range_delta.total_seconds() / (self.timeframe * 60))
+        #todo
+        # self.trial_train_range_row = int(self.trial_train_range_delta.total_seconds() / (self.timeframe * sixty))
+        self.trial_train_range_row = int(self.trial_train_range_delta.days / self.timeframe)
 
         # Infer cardinality of Trials:
         self.total_samples = int(

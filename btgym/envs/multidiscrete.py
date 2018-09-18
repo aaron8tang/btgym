@@ -163,7 +163,7 @@ class MultiDiscreteEnv(BTgymEnv):
     server_response = None
 
     # Connection timeout:
-    connect_timeout = 60  # server connection timeout in seconds.
+    connect_timeout = 220  # server connection timeout in seconds.
     # connect_timeout_step = 0.01  # time between retries in seconds.
 
     # Rendering:
@@ -202,7 +202,7 @@ class MultiDiscreteEnv(BTgymEnv):
             data_master=True (bool):                        let this environment control over data_server;
             data_network_address=`tcp://127.0.0.1:` (str):  data_server address.
             data_port=4999 (int):                           network port to use for server -- data_server communication.
-            connect_timeout=60 (int):                       server connection timeout in seconds.
+            connect_timeout=20 (int):                       server connection timeout in seconds.
             render_enabled=True (bool):                     enable rendering for this environment;
             render_modes=['human', 'episode'] (list):       `episode` - plotted episode results;
                                                             `human` - raw_state observation.

@@ -462,7 +462,7 @@ class BTgymServer(multiprocessing.Process):
         # How long to wait for data_master to reset data:
         self.wait_for_data_reset = 300  # seconds
 
-        connect_timeout = 60  # in seconds
+        connect_timeout = 220  # in seconds
 
         # Set up a comm. channel for server as ZMQ socket
         # to carry both service and data signal

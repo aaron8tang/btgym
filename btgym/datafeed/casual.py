@@ -427,8 +427,10 @@ class BTgymCasualDataDomain(BTgymRandomDataDomain):
         # ... maximum episode time duration:
         self.max_sample_len_delta = datetime.timedelta(**self.sample_duration)
 
+        #todo
         # Maximum possible number of data records (rows) within episode:
-        self.sample_num_records = int(self.max_sample_len_delta.total_seconds() / (60 * self.timeframe))
+        # self.sample_num_records = int(self.max_sample_len_delta.total_seconds() / (sixty * self.timeframe))
+        self.sample_num_records = int(self.max_sample_len_delta.days / self.timeframe)
 
         self.log.debug('sample_num_records: {}'.format(self.sample_num_records))
         self.log.debug('sliding_test_period: {}'.format(self.test_period))
@@ -437,7 +439,9 @@ class BTgymCasualDataDomain(BTgymRandomDataDomain):
         self.test_range_delta = datetime.timedelta(**self.test_period)
         self.train_range_delta = datetime.timedelta(**self.sample_duration) - datetime.timedelta(**self.test_period)
 
-        self.test_num_records = round(self.test_range_delta.total_seconds() / (60 * self.timeframe))
+        #todo
+        # self.test_num_records = round(self.test_range_delta.total_seconds() / (sixty * self.timeframe))
+        self.test_num_records = round(self.test_range_delta.days / self.timeframe)
         self.train_num_records = self.sample_num_records - self.test_num_records
 
         self.log.debug('test_num_records: {}'.format(self.test_num_records))

@@ -139,31 +139,32 @@ class BTgymBaseData:
         """
         self.filename = filename
 
-        if parsing_params is None:
-            self.parsing_params = dict(
-                # Default parameters for source-specific CSV datafeed class,
-                # correctly parses 1 minute Forex generic ASCII
-                # data files from www.HistData.com:
+        self.parsing_params = dict(
+            # Default parameters for source-specific CSV datafeed class,
+            # correctly parses 1 minute Forex generic ASCII
+            # data files from www.HistData.com:
 
-                # CSV to Pandas params.
-                sep=';',
-                header=0,
-                index_col=0,
-                parse_dates=True,
-                names=['open', 'high', 'low', 'close', 'volume'],
+            # CSV to Pandas params.
+            sep=';',
+            header=0,
+            index_col=0,
+            parse_dates=True,
+            names=['open', 'high', 'low', 'close', 'volume'],
 
-                # Pandas to BT.feeds params:
-                timeframe=1,  # 1 minute.
-                datetime=0,
-                open=1,
-                high=2,
-                low=3,
-                close=4,
-                volume=-1,
-                openinterest=-1,
-            )
-        else:
-            self.parsing_params = parsing_params
+            # Pandas to BT.feeds params:
+            timeframe=1,  # 1 minute.
+            datetime=0,
+            open=1,
+            high=2,
+            low=3,
+            close=4,
+            volume=-1,
+            openinterest=-1,
+        )
+
+        #todo
+        if parsing_params is not None:
+            self.parsing_params['header'] = parsing_params['header']
 
         if sampling_params is None:
             self.sampling_params = dict(
@@ -339,24 +340,31 @@ class BTgymBaseData:
             )
         )
 
-        # Maximum data time gap allowed within sample as pydatetimedelta obj:
+        '''Maximum data time gap allowed within sample as pydatetimedelta obj:, format is xx days,xx hours,xx minutes'''
         self.max_time_gap = datetime.timedelta(**self.time_gap)
 
-        # ... maximum episode time duration:
+        '''... maximum episode time duration:, format is xx days,xx hours,xx minutes'''
         self.max_sample_len_delta = datetime.timedelta(**self.sample_duration)
 
+        #todo
         # Maximum possible number of data records (rows) within episode:
-        self.sample_num_records = int(self.max_sample_len_delta.total_seconds() / (60 * self.timeframe))
+        # self.sample_num_records = int(self.max_sample_len_delta.total_seconds() / (sixty * self.timeframe))
+        '''let's define timeframe uses days as unit, with default value 1'''
+        self.sample_num_records = int(self.max_sample_len_delta.days / self.timeframe)
 
         # Train/test timedeltas:
         self.test_range_delta = datetime.timedelta(**self.test_period)
         self.train_range_delta = datetime.timedelta(**self.sample_duration) - datetime.timedelta(**self.test_period)
 
-        self.test_num_records = round(self.test_range_delta.total_seconds() / (60 * self.timeframe))
+        #todo
+        # self.test_num_records = round(self.test_range_delta.total_seconds() / (sixty * self.timeframe))
+        self.test_num_records = round(self.test_range_delta.days / self.timeframe)
         self.train_num_records = self.data.shape[0] - self.test_num_records
 
         # self.backshift_delta = datetime.timedelta(**self._test_period_backshift)
-        self.backshift_num_records = round(self._test_period_backshift_delta.total_seconds() / (60 * self.timeframe))
+        #todo
+        # self.backshift_num_records = round(self._test_period_backshift_delta.total_seconds() / (sixty * self.timeframe))
+        self.backshift_num_records = round(self._test_period_backshift_delta.days / self.timeframe)
 
         break_point = self.train_num_records
 
