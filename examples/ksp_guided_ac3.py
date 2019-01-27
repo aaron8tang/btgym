@@ -39,19 +39,9 @@ engine.addstrategy(
 engine.addobserver(ExpertObserver)
 
 # Set leveraged account:
-engine.broker.setcash(2000)
+engine.broker.setcash(100000)
 engine.broker.setcommission(commission=0.0001, leverage=10.0) # commisssion to imitate spread
-engine.addsizer(bt.sizers.SizerFix, stake=5000)
-
-# Data: uncomment to get up to six month of 1 minute bars:
-data_m1_6_month = [
-    './data/DAT_ASCII_EURUSD_M1_201701.csv',
-    './data/DAT_ASCII_EURUSD_M1_201702.csv',
-    './data/DAT_ASCII_EURUSD_M1_201703.csv',
-    #'./data/DAT_ASCII_EURUSD_M1_201704.csv',
-    #'./data/DAT_ASCII_EURUSD_M1_201705.csv',
-    #'./data/DAT_ASCII_EURUSD_M1_201706.csv',
-]
+engine.addsizer(bt.sizers.SizerFix, stake=500)
 
 
 # Uncomment single choice of source file:
@@ -63,17 +53,17 @@ dataset = BTgymRandomDataDomain(
         header=None,
     ),
     trial_params=dict(
-        start_weekdays={0, 1, 2, 3, 4, 5, 6},
-        sample_duration={'days': 1, 'hours': 0, 'minutes': 0},
+        start_weekdays={0, 1, 2, 3, 4},
+        sample_duration={'days': 90, 'hours': 0, 'minutes': 0},
         start_00=False,
-        time_gap={'days': 1, 'hours': 0},
-        test_period={'days': 5, 'hours': 0, 'minutes': 0},
+        time_gap={'days': 50, 'hours': 0},
+        test_period={'days': 150, 'hours': 0, 'minutes': 0},
     ),
     episode_params=dict(
-        start_weekdays={0, 1, 2, 3, 4, 5, 6},
-        sample_duration={'days': 1, 'hours': 0, 'minutes': 0},
+        start_weekdays={0, 1, 2, 3, 4},
+        sample_duration={'days': 30, 'hours': 0, 'minutes': 0},
         start_00=False,
-        time_gap={'days': 1, 'hours': 0},
+        time_gap={'days': 50, 'hours': 0},
     ),
 )
 
